@@ -1,0 +1,76 @@
+html, body{
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+.experiment{
+    position: absolute;
+    font-size: 1.3em;
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+a:link,
+a:visited {
+    color: white;
+}
+
+a:active,
+a:hover {
+    color: grey;
+}
+
+a.ebuttonsmall{
+    display: inline-block;
+    margin-bottom: 5px;
+    padding: .2em;
+    font-size: .7em;
+    font-weight: bold;
+    text-decoration: none;
+    width: 15em;
+}
+
+a.ebutton{
+    display: inline-block;
+    padding: .3em;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: .8em;
+    width: 15em;
+}
+
+a.ebuttonsmall:link,
+a.ebuttonsmall:visited,
+a.ebutton:link,
+a.ebutton:visited {
+    color: black;
+    background-color: lightgrey;
+    border-width: 2px;
+    border-style: outset;
+    border-color: grey;
+}
+
+a.ebuttonsmall:active,
+a.ebuttonsmall:hover,
+a.ebutton:active,
+a.ebutton:hover {
+    color: white;
+    background-color: dimgrey;
+    border-width: 2px;
+    border-style: inset;
+    border-color: grey;
+}
+
+.counter{
+    font-size: large;
+}
+
+.bold{
+    font-weight: bold;
+}

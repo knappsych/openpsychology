@@ -1,0 +1,8 @@
+# Include your project-specific ignores in this file
+**migrations/
+**.idea/
+**__pycache__/
+**.pyc
+**.pyo
+**settings.py
+**private.py

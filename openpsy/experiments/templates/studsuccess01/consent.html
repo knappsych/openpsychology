@@ -1,0 +1,214 @@
+{% extends "base.html"%}
+
+{% load staticfiles %}
+
+{% block javascript %}
+    <script src="{%  static 'experiments/experiments.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block title %}Informed consent for {{ pretty_name }}{% endblock %}
+
+{% block body %}
+    {% if have_page %}
+        <h1>Thanks for considering participating in {{ pretty_name }}.</h1>
+
+        <h2>Purpose:</h2>
+        <p>
+            This experiment was designed to explore whether or not your
+            previous and current financial experiences and financial preferences
+            are related to academic success. This is an important topic to
+            study as indications of risk to attaining academic success, could
+            be used to offer students additional services that could help them
+            succeed (e.g. peer-accountability groups or specific skills workshops.
+        </p>
+
+        <h2>What can you expect:</h2>
+        <p>
+            This experiment contains several stages. In one stage you'll be asked
+            to provide basic demographic information (e.g. age and gender). In
+            another stage you'll be asked to indicate how much you agree with 20
+            statements about your current and previous financial experiences (e.g.
+            while growing up, my caregivers regularly took us out for pizza and / or
+            other treats). All of these questions will be general in nature. Thus,
+            you won't be asked to divulge your actual income or savings. In another
+            stage you'll be asked to indicate which of two options you would prefer
+            (e.g. 20$ today or 40$ in one week).
+        </p>
+        <p>
+            If you provide an academic email (e.g. yourname@university.edu), the
+            experimenter will contact your registrar's office to access your current
+            and future academic records. The data sought include ACT/SAT scores,
+            high school GPA, high school rank, college GPA, number of credits attempted,
+            number of credits completed, time to degree, and records related to
+            academic suspension and dropping out. These data will be stripped of any
+            direct personally identifying information. Additionally, these data will be
+            transmitted and stored securely. By providing an academic email address, you
+            are giving the experimenter explicit permission to access your academic records.
+        </p>
+        <p>
+            If you don't attend a university, you may still
+            participate as we're also interested in determining whether one's
+            financial experiences predict one's financial preferences.
+        </p>
+        <p>
+            Once you begin the experiment, you should be able to complete it
+            within about 15-20 minutes. Please, do not begin the experiment
+            unless you expect to be free from distractions for the duration
+            of the experiment.
+        </p>
+        <p>
+            Should you agree to participate, you'll be sent an email with a
+            code you'll need to use to access the actual experiment. This is
+            to verify that you are who you say you are.
+        </p>
+
+        <h2>Your rights:</h2>
+        <p>
+            You have the right to discontinue participating at any time. For some
+            of the demographic questions, you'll have options to not respond, if
+            you're uncomfortable providing that information. There are no such
+            options to not respond to the questions regarding financial experiences
+            and preferences, so if you wish to discontinue, just shut the close
+            the webpage. No data will be saved until you've completed the experiment.
+        </p>
+        <p>
+            You also have the right to receive more information about this study.
+            If you would like more information before consenting, please contact
+            the study's primary investigator using the
+            <a href="{% url 'experiments:experiments' %}{{ e_name }}/inquiry/">
+            inquiry form</a>.
+        </p>
+        <p>
+            You also have the right to learn more about the specific hypotheses
+            under investigation in this experiment. At the end of your participation
+            you'll receive a debriefing email that will describe some of the specific
+            hypotheses and where you can learn more if you're interested.
+        </p>
+
+        <p>
+            If you believe that any of your rights are violated during the course of
+            the experiment, you have the opportunity to contact the chair of the
+            <a href="{% url 'experiments:experiments' %}{{ e_name }}/ethics/">Institutional
+            Review Board or equivalent</a> of the institution who has approved the
+            primary investigator to conduct this research.
+        </p>
+
+        <h2>Potential risks:</h2>
+        <p>
+            There are few anticipated risks to participating. It's possible that you
+            might find some of the questions repetitive or boring, but it's also
+            possible that you'll find participating to be an enjoyable experience.
+        </p>
+        <p>
+            One potential risk is that your identity could be linked to your individual
+            responses. Several steps have been taken to ensure that the probability
+            this could occur are minimized. First, your email address is not stored
+            with the data you submit, or even with which studies you participate in.
+            Your emails are temporarily stored during your participation in order to
+            send you debriefing information that can be used to verify that you
+            participated. Your email address will also be stored separately from
+            any other data to contact you should there be the opportunity for
+            follow-up studies or other research opportunities. These emails are
+            double password-protected, which provides roughly the same level of
+            protection that signing a consent form that's stored in a locked
+            cabinet in a locked room provides.
+        </p>
+        <p>
+            In collecting data from your institutions about your academic performance,
+            your personally identifying information (e.g. name or address) will
+            be removed from the data or transformed so the experimenter can connect
+            your experimental data with your academic performance. The experimenters
+            will obtain these data manually, so no sensitive information is exposed
+            over the internet, or have the data encrypted and/or password protected
+            before being electronically submitted.
+        </p>
+        <p>
+            Only the experimenters or their assistants will have access to the raw
+            data. Should the results be presented publicly, the data will be
+            presented in aggregate form with no information that could be used
+            to identify an individual with their performance.
+        </p>
+
+        <h2>Potential benefits:</h2>
+        <p>
+            If you are a college student, some of your professors might offer you
+            extra-credit for participating. You can share the debriefing email with
+            them as evidence that you successfully completed the experiment.
+        </p>
+        <p>
+            Although no direct financial incentives are provided for participating
+            in this experiment, your participation will be useful in answering
+            important questions about human performance, preferences, and experiences.
+            By participating, you'll also gain first-hand experience about what the
+            research process is like. This can be useful in deciding whether you might
+            be interested in pursuing a research career. You also might find that
+            you're particularly interested in some topic. As this experiment is being
+            conducted solely online, there's always the possibility that you could
+            identify a question of your own that you could investigate using this
+            platform. Such inquiries should be directed to Open Psychology using
+            our <a href="{% url 'contact' %}/contact/">contact form</a> or to
+            the primary investigator using the
+            <a href="{% url 'experiments:experiments' %}{{ e_name }}/inquiry/">
+            experiment inquiry form</a>.
+        </p>
+
+        <h2>Your responsibilities:</h2>
+        <p>
+            Although your participation is completely voluntary, it's important that
+            you take this experience seriously. For the questions concerning your
+            financial experiences and preferences, the right answers are the honest
+            ones. Please consider each statement or option carefully before responding.
+            Such conscientious participation, will help to ensure the validity of our
+            study and be of greater scientific value. As mentioned before, if at
+            any point you prefer to discontinue participation, please do so, as opposed
+            to participating without thoughtfully considering the options.
+        </p>
+
+        <h2>In participating you agree that:</h2>
+        <ul>
+            <li>Your participation is voluntary and not coerced.</li>
+            <li>You are 18, older, or have your primary caregiver's permission to participate.</li>
+            <li>You understand what you'll be asked to do in the experiment.</li>
+            <li>You understand the potential risks and benefits of participating.</li>
+            <li>If you are a student, you agree that the experimenters may contact your educational
+            institution to attempt to obtain information about your academic success.</li>
+            <li>If you are a student, your participation, in no way obligates your institution
+            to divulge any information about your academic success.</li>
+            <li>To ensure the integrity of the experiment, you will not discuss any of the
+            specific questions or hypotheses related to this experiment with anyone who has
+            not yet participated in the experiment.</li>
+            <li><em>If you provide an academic email address, you grant the experimenter
+            explicit permission to access to your current and future academic records from the
+            institution identified in the email.</em></li>
+        </ul>
+        <p>
+            If you agree to participate, please enter your email. If you are currently a student,
+            please provide your university email address so the experimenters can attempt to
+            obtain measures related to your student success. If you agree to be contacted for
+            follow-up studies or other research opportunities, please leave the "Permission
+            to contact" box checked. Otherwise, uncheck the box and we won't contact you except
+            to send you the access code and debriefing information.
+        </p>
+        <p>
+            Please check your email for the access code, should you agree to participate. If
+            you don't receive the access code promptly, please check your spam and trash folders.
+            If you still can't find it, please <a href="{% url 'contact' %}/contact/">contact
+            Open Psychology</a>.
+        </p>
+        <div id = "form_errors" class = "nodisplay">
+            Please, enter a valid email.
+        </div>
+   <form method="post" action="{% url 'experiments:experiments' %}{{ e_name }}/validate/"
+        onsubmit="return form_check_email()">
+        {% csrf_token %}
+        <table>
+        {{ consent_form }}
+        </table>
+        <input type="submit" value="I consent to participate.">
+   </form>
+   {% else %}
+       <p>There is no experiment currently associated with this page. Perhaps you
+       could find another <a href="{% url "experiments:experiments" %}">experiment</a> in
+       which to participate. Thanks for your interest in participating!</p>
+   {% endif %}
+ {% endblock %}

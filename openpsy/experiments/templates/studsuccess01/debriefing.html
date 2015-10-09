@@ -1,0 +1,24 @@
+{% extends "base.html"%}
+
+{% load staticfiles %}
+
+{% block javascript %}
+{% endblock %}
+
+{% block title %}Debriefing for {{ pretty_name }}{% endblock %}
+
+{% block body %}
+    {% autoescape off %}{{ debriefing }}{% endautoescape %}
+
+    <h2>Want to learn more?</h2>
+    <p>
+        <a href="{% url 'experiments:experiments' %}{{ e_name }}/inquiry"> Email
+        the primary investigator.</a>
+    </p>
+
+    <h2>Do you have ethical concerns?</h2>
+    <p>
+        <a href="{% url 'experiments:experiments' %}{{ e_name }}/ethics"> Email
+        the Institutional Review Board Chair.</a>
+    </p>
+ {% endblock %}

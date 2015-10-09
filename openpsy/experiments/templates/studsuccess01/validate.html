@@ -1,0 +1,70 @@
+{% extends "base.html"%}
+
+{% load staticfiles %}
+
+{% block javascript %}
+    <script src="{%  static 'experiments/experiments.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block title %}Participate in {{ pretty_name }}.{% endblock %}
+
+{% block body %}
+    {% if which_version ==  "validate"%}
+        <p>An email has just been sent to the email address you supplied on the previous page.
+        This email contains an access code you'll need to access the experiment. Please enter
+        the code into the following form. If you haven't received the access code within a few
+        minutes of submitting your email address, please check your spam folder. You might
+        also consider editing your safe-lists to ensure that emails from Open Psychology reach
+        you promptly.</p>
+        <div id="form_errors" class="nodisplay">
+        The code you entered is not valid. Please, double-check your email and try again.
+        </div>
+        <form method="post" action="{% url 'experiments:experiments' %}{{ e_name }}/participate/"
+        onsubmit="return form_check_access_code()">
+            {% csrf_token %}
+            <table><tbody>
+            <tr>
+                <th><label for=""access_code">Access Code:</label></th>
+                <td><input id="access_code" maxlength="10" name="access_code" type="text"></td>
+            </tr>
+            </tbody></table>
+            <input type="submit" value="I consent to participate.">
+        </form>
+        <p>
+            If your browser isn't already maximized, please do so now. Fonts and images will
+            be presented in a larger format suitable for desktop or mobile access.
+        </p>
+    {% endif %}
+
+    {% if which_version ==  "have to wait"%}
+        <p>You must wait until {{ time_to_participate }} before you can participate again.
+        Until then, perhaps you could find another
+        <a href="{% url "experiments:experiments" %}">experiment</a> in
+        which to participate. Thanks again!</p>
+    {% endif %}
+
+    {% if which_version ==  "already participated"%}
+        <p>You've already participated in this experiment and this particular experiment only
+        permits individuals to participate once. Thank you for participating. Perhaps you
+        could find another <a href="{% url "experiments:experiments" %}">experiment</a> in
+        which to participate. Thanks again!</p>
+    {% endif %}
+
+    {% if which_version ==  "no experiment"%}
+        <p>There is no experiment currently associated with this page. Perhaps you
+        could find another <a href="{% url "experiments:experiments" %}">experiment</a> in
+        which to participate. Thanks for your interest in participating!</p>
+    {% endif %}
+
+    {% if which_version ==  "no email"%}
+        <p>In order to participate in this experiment, you must enter a valid email. Please,
+        <a href="{% url 'experiments:experiments' %}{{ e_name }}/consent/">go back</a> and try
+        again. Thank you, for your interest in participating!</p>
+    {% endif %}
+
+    {% if which_version ==  "couldn't send email"%}
+        <p>Whoops, something went wrong on our end and your access code didn't get sent.
+        Please, <a href="{% url 'experiments:experiments' %}{{ e_name }}/consent/">go back</a>
+        and try again. Thank you, for your interest in participating!</p>
+    {% endif %}
+ {% endblock %}
