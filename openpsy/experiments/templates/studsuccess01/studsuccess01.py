@@ -1,10 +1,11 @@
 import os
 import zipfile
 from shutil import copyfile
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
 from experiments.models import User, Experiment, Participant
 from experiments.experiments import create_participant_id, write_or_append
 from django.utils import timezone
+from openpsy.settings import STATICFILES_DIRS
 __author__ = 'wknapp'
 
 
@@ -137,10 +138,16 @@ def validate_experimental_data(request, e_name):
         demo_filename = e_name + '_demo.csv'
         security_filename = e_name + '_security.csv'
         discount_filename = e_name + '_discount.csv'
-        basefile = os.getcwd()
-        demo_file = os.path.join(basefile, 'experiments/templates/' + e_name + '/' + demo_filename)
-        security_file = os.path.join(basefile, 'experiments/templates/' + e_name + '/' + security_filename)
-        discount_file = os.path.join(basefile, 'experiments/templates/' + e_name + '/' + discount_filename)
+
+        #The following kept giving me different values when it would run. I need something more reliable.
+        #basefile = os.getcwd() kept returning different values
+        basefile = os.path.dirname(os.path.abspath(__file__))
+        #I can't get the os.path.join working the way I want it to either.
+        #demo_file = os.path.join(basefile, 'experiments/templates' + e_name+ '/' + demo_filename) #First Try with os.getcwd
+        #demo_file = os.path.join(basefile, '/' + demo_filename) #Second Try with current basefile.
+        demo_file = basefile + '/' + demo_filename #Third Try
+        security_file = basefile + '/' + security_filename
+        discount_file = basefile + '/' + discount_filename
         demo_data = demo_data.replace("<br>", "\n")
         security_data = security_data.replace("<br>", "\n")
         discount_data = discount_data.replace("<br>", "\n")
@@ -150,8 +157,9 @@ def validate_experimental_data(request, e_name):
         write_or_append(discount_file, discount_data)
 
         #Zip the files into one zipped source
-        os.chdir(os.path.join(basefile, 'experiments/templates/' + e_name + '/'))
-        zfile_name = os.path.join(basefile, 'experiments/templates/' + e_name + '/' + e_name + '.zip')
+        os.chdir(basefile)
+        #zfile_name = os.path.join(basefile, 'experiments/templates/' + e_name + '/' + e_name + '.zip')
+        zfile_name = basefile + '/' + e_name + '.zip'
         zf = zipfile.ZipFile(zfile_name, mode="w")
         zf.write(demo_filename)
         zf.write(security_filename)
@@ -159,7 +167,8 @@ def validate_experimental_data(request, e_name):
         zf.close()
 
         #Copy the zipfile to the static directory
-        copyfile(zfile_name, os.path.join(basefile, 'static/experiments/' + e_name + '/' + e_name + '.zip'))
+        #copyfile(zfile_name, os.path.join(STATICFILES_DIRS[0], 'static/experiments/' + e_name + '/' + e_name + '.zip'))
+        copyfile(zfile_name, os.path.join(STATICFILES_DIRS[0], e_name + '/' + e_name + '.zip'))
 
         # email debriefing
         email_body = debriefing + '''
@@ -172,7 +181,7 @@ def validate_experimental_data(request, e_name):
             <h2>Do you have ethical concerns?</h2>
             <p>
                 Contact the chair of the institutional review board for this study, ''' + exp.institution.irb_chair_name + '''
-                at ''' + exp.pi.email + '''.
+                at ''' + exp.institution.irb_chair_email + '''.
             </p>'''
 
         email_subject = 'Thanks for participating in ' + exp.pretty_name + '!'
