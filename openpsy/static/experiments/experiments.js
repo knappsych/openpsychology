@@ -15,6 +15,8 @@ function openFullScreen(){
         document.documentElement.requestFullscreen();
     } else if (document.documentElement.msRequestFullscreen) {
         document.documentElement.msRequestFullscreen();
+		alert("We detected that you're using MS Internet Explorer. Please press the 'F11' key " +
+            "twice to properly view the experiment.")
     } else if (document.documentElement.mozRequestFullScreen) {
         document.documentElement.mozRequestFullScreen();
     } else if (document.documentElement.webkitRequestFullscreen) {
