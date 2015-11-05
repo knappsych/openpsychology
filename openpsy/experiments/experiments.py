@@ -108,9 +108,6 @@ def validate_view_processor(request, e_name):
     # Create the participant id number
     pid = create_participant_id(user, e_name, permission)
 
-    # Create an access code for the participant
-    a_code = create_participant_access_code(pid, e_name, permission)
-
     # Get the institution for the participant
     institute = user_email.split("@")[1]
 
@@ -120,34 +117,37 @@ def validate_view_processor(request, e_name):
     try:
         subject = Participant.objects.get(participant=pid, experiment=exp.id)
     except:
+        # Create an access code for the participant
+        a_code = create_participant_access_code(pid, e_name, permission)
         subject = Participant(participant=pid,
                             experiment=exp,
                             institution=institute,
                             access_code=a_code,
                             participation_time=0,
                             time_last_participated=timezone.now(),
-                              )
+                            )
         subject.save()
 
     if((subject.participation_time == 0) or (exp.repeat == "t")):
         if(subject.participation_time > 0): #They've already participated
             #Check that they've waited enough time
             time_to_participate = None
-            if(exp.repeat_delay_units=="hours"):
+            if exp.repeat_delay_units=="hours":
                 time_to_participate = subject.time_last_participated + datetime.timedelta(hours=exp.repeat_delay)
-            elif(exp.repeat_delay_units=="days"):
+            elif exp.repeat_delay_units=="days":
                 time_to_participate = subject.time_last_participated + datetime.timedelta(days=exp.repeat_delay)
-            elif(exp.repeat_delay_units=="months"):
+            elif exp.repeat_delay_units=="months":
                 time_to_participate = subject.time_last_participated + datetime.timedelta(days=exp.repeat_delay*30)
-            else:
+            else: #Years
                 time_to_participate = subject.time_last_participated + datetime.timedelta(days=exp.repeat_delay*365)
             if time_to_participate > timezone.now():
                 time_string = time_to_participate.strftime("%I:%M %p, %B %d, %Y")
                 return {"which_version": "have to wait", "e_name": e_name, "pretty_name": exp.pretty_name.lower(),
                         "time_to_participate": time_string}
-
-        subject.access_code = a_code
-        subject.save()
+            elif subject.access_code == 'ZZZZZZZZZZ': #They can participate, but they'll need a new access code
+                a_code = create_participant_access_code(pid, e_name, permission)
+                subject.access_code = a_code
+                subject.save()
     else:
         return {"which_version": "already participated", "e_name": e_name, "pretty_name": exp.pretty_name.lower()}
 
