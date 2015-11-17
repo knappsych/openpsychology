@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 from django.views.decorators.http import require_http_methods
 from experiments.experiments import *
 from experiments.models import Experiment
-from experiments.templates.studsuccess01.studsuccess01 import validate_experimental_data
+from experiments.debriefing import validate_experimental_data
 from openpsy.openpsy import verify_and_send_email_form
 
 
@@ -48,11 +48,6 @@ def participate_view(request, e_name):
 def debriefing_view(request, e_name):
     c = validate_experimental_data(request, e_name)
     return render_to_response(e_name + "/debriefing.html", c)
-
-
-def results_view(request, e_name):
-
-    return render_to_response(e_name + "/results.html")
 
 
 def inquiry_view(request, e_name):

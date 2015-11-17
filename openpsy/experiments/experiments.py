@@ -48,9 +48,9 @@ def experiment_list_view_context():
 def consent_view_context(request, e_name):
     have_page=True
     try:
-        exp=Experiment.objects.get(url_name=e_name)
+        exp = Experiment.objects.get(url_name=e_name)
     except:
-        have_page=False
+        have_page = False
     form = UserForm()
 
     c = {"pretty_name": exp.pretty_name.lower(),
@@ -124,8 +124,7 @@ def validate_view_processor(request, e_name):
                             institution=institute,
                             access_code=a_code,
                             participation_time=0,
-                            time_last_participated=timezone.now(),
-                            )
+                            time_last_participated=timezone.now(),)
         subject.save()
 
     if((subject.participation_time == 0) or (exp.repeat == "t")):
@@ -342,3 +341,4 @@ def write_or_append(filename, data):
         with open(filename, "w") as outfile:
             csv_file = File(outfile)
             csv_file.write(data)
+

@@ -11,14 +11,6 @@
         </tr>
         {% for e in exps %}
         <tr class="experiment_tr">
-        <!-- The following works to provide contact forms to the general public. I don't think this is what we want.
-        People have access to the experimenter's name and institution, so they should be findable. I'll offer the
-        links in the debriefing to avoid generating too much spam.
-            <td class="experiment_td"><a href="{% url 'experiments:experiments' %}{{ e.url_name }}/consent">{{ e.pretty_name }}</a></td>
-            <td class="experiment_td"><a href="{% url 'experiments:experiments' %}{{ e.url_name }}/inquiry">{{ e.first_name }}
-                {{ e.last_name }}</a></td>
-            <td class="experiment_td"><a href="{% url 'experiments:experiments' %}{{ e.url_name }}/ethics">{{ e.institution_name }}</a></td>
-        -->
             <td class="experiment_td"><a href="{% url 'experiments:experiments' %}{{ e.url_name }}/consent">{{ e.pretty_name }}</a></td>
             <td class="experiment_td">{{ e.first_name }} {{ e.last_name }}</td>
             <td class="experiment_td">{{ e.institution_name }}</td>

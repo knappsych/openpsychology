@@ -69,7 +69,7 @@ class Experiment(models.Model):
 
 class User(models.Model):
     email = models.EmailField(unique=True)
-    permission_to_contact = models.BooleanField(default=True)
+    permission_to_contact = models.BooleanField(default=False)
     def __str__(self):
         return self.pretty_name
 

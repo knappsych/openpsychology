@@ -1,0 +1,55 @@
+{% extends "base.html"%}
+
+{% load staticfiles %}
+
+{% block body %}
+    {% if email_sent %}
+        <p>Thank you for your email.</p>
+    {% else %}
+        <p>
+            If you'd like more information about about {{ pretty_name }}, contact
+        {{ pi_name }} using this form to get more information.
+        </p>
+        <div id="post_errors" name="post_errors" class="inline caution">
+            {% if subject_error %}
+                <p class="caution">
+                    Please, use a more descriptive subject.
+                </p>
+            {% endif %}
+
+            {% if email_error %}
+                <p class="caution">
+                    Please, use a valid email address.
+                </p>
+            {% endif %}
+            {% if message_error %}
+                <p class="caution">
+                    Please, include more detail about your inquiry in your message.
+                </p>
+            {% endif %}
+        </div>
+        <div id="form_errors" name="form_errors" class="no display">
+
+        </div>
+        <form method="post" action="." onsubmit="return form_check_contact()">
+            {% csrf_token %}
+            <table>
+                <tbody>
+                    <tr>
+                        <th><label for="id_subject">The E-mail Subject:</label></th>
+                        <td><input id="id_subject" maxlength="254" name="subject" type="text" value="{{ subject }}"></td>
+                    </tr>
+                    <tr>
+                        <th><label for="id_sender_email">Your E-mail Address:</label></th>
+                        <td><input id="id_sender_email" maxlength="254" name="email" type="email" value="{{ email }}"></td>
+                    </tr>
+                    <tr>
+                        <th><label for="id_message">The E-mail Contents:</label></th>
+                        <td><textarea id="id_message" maxlength="254" rows="10" cols="50" name="message">{{ message }}</textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" value="Submit Email">
+        </form>
+    {% endif %}
+{% endblock %}
